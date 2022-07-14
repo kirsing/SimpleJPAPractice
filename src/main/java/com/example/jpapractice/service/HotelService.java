@@ -37,6 +37,16 @@ public class HotelService {
     public List<Hotel> findAllSQL() {
         return entityManager.createNativeQuery("SELECT * FROM hotels_table", Hotel.class).getResultList();
     }
+    public List<Hotel> findAllSQLParam(Integer id, Integer price) {
+        return entityManager.createNativeQuery("SELECT * FROM hotels_table where hotel_id =:id or rent_price >=:price", Hotel.class)
+                .setParameter("id",id)
+//                .setParameter(1,id)   // вместо двоеточия в запросе - вопросительный знак 1
+                .setParameter("price", price)
+                .getResultList();
+    }
+    public List<Hotel> findAllSQLByPriceDesc() {
+        return entityManager.createNativeQuery("SELECT * FROM hotels_table ORDER BY rent_price DESC", Hotel.class).getResultList();
+    }
 
     public List<Hotel> findAllJPQL() {
         return entityManager.createQuery("FROM hotels_table", Hotel.class).getResultList();

@@ -37,8 +37,15 @@ public class HotelController {
     }
     @GetMapping("/findAllsql")
     public List<Hotel> findAllSql() {
+//        return hotelService.findAllSQL();
         return hotelService.findAllSQL();
     }
+    @GetMapping("/findAllsql/{id}/{price}")
+    public List<Hotel> findAllSql2(@PathVariable int id, @PathVariable int price) {
+//        return hotelService.findAllSQL();
+        return hotelService.findAllSQLParam(id, price);
+    }
+
     @GetMapping("/findAllJpql")
     public List<Hotel> findAllJpql() {
         return hotelService.findAllJPQL();
@@ -52,4 +59,27 @@ public class HotelController {
     public Integer getCriteriaHotelsSumPrices() {
         return hotelService.getCriteriaHotelSumPrices();
     }
+    @GetMapping("/keywords/gtprices/{id}/{price}")
+    public List<Hotel> findByIdAndPriceGreaterThan(@PathVariable int id, @PathVariable int price) {
+//        return hotelRepository.findByIdOrPriceGreaterThan(id, price);
+//        return hotelRepository.findByIdOrPriceGreaterThansql(id, price);
+        return hotelRepository.findByIdOrPriceGreaterThanjpql(id, price);
+    }
+    @GetMapping("/pricebetween/{start}/{finish}")
+    public List<Hotel> findByPriceBetween(@PathVariable int start, @PathVariable int finish) {
+        return hotelRepository.findByPriceBetween(start, finish);
+    }
+    @GetMapping("/hotels/names/{name}")
+    public List<Hotel> findByTittleLike(@PathVariable String name) {
+        return hotelRepository.findByTittleLike(name);
+    }
+ @GetMapping("/keywords/byPricedesc")
+    public List<Hotel> findAllByPriceDesc() {
+        return hotelService.findAllSQLByPriceDesc();
+    }
+    @PutMapping("/hotels/putPrices/{price}/{id}")
+    public void setPriceById(@PathVariable int price, @PathVariable int id) {
+        hotelRepository.setPriceById(id, price);
+    }
+
 }
